@@ -82,7 +82,7 @@ func (t *Trigger) reportUserHandle() {
 	t.l.Info("Run report user task...")
 	defer t.l.Info("Run pull user task done.")
 	// triggering report user handler
-	err := t.h.ReportUserHandle()
+	err := t.h.ReportUserHandle(t.remoteId)
 	if err != nil {
 		t.l.WithError(err).Error("Report user handle failed")
 		return
