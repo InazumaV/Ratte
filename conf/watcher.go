@@ -4,6 +4,7 @@ import (
 	"Ratte/common/watcher"
 	"errors"
 	"fmt"
+	log "github.com/sirupsen/logrus"
 	"path"
 )
 
@@ -31,8 +32,13 @@ func (c *Conf) SetErrorHandler(w ErrorHandler) {
 }
 
 func (c *Conf) Watch() error {
-	if c.watcherHandle != nil {
+	if c.watcherHandle == nil {
 		return errors.New("no watch handler")
+	}
+	if c.errorHandler == nil {
+		c.errorHandler = func(err error) {
+			log.WithField("service", "conf_watcher").Error(err)
+		}
 	}
 	if IsHttpUrl(c.path) {
 		if c.Watcher.WatchRemoteConfig {
