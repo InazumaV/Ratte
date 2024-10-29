@@ -20,11 +20,34 @@ func (h *Handler) PullNodeHandle(n *panel.NodeInfo) error {
 			return fmt.Errorf("create cert error: %w", err)
 		}
 	}
-	err := h.c.AddNode(&core.AddNodeParams{
+	var protocol, port string
+	switch n.Type {
+	case "vmess":
+		protocol = "vmess"
+		port = n.VMess.Port
+	case "vless":
+		protocol = "vless"
+		port = n.VLess.Port
+	case "shadowsocks":
+		protocol = "shadowsocks"
+		port = n.Shadowsocks.Port
+	case "trojan":
+		protocol = "trojana"
+		port = n.Trojan.Port
+	case "other":
+		protocol = "other"
+		port = n.Other.Port
+	}
+	err := h.execHookCmd(h.Hook.BeforeAddNode, h.nodeName, protocol, port)
+	if err != nil {
+		h.l.WithError(err).Error("Exec before add node hook failed")
+	}
+	err = h.c.AddNode(&core.AddNodeParams{
 		NodeInfo: core.NodeInfo{
 			CommonNodeInfo: params.CommonNodeInfo{
 				Type:        n.Type,
 				VMess:       n.VMess,
+				VLess:       n.VLess,
 				Shadowsocks: n.Shadowsocks,
 				Trojan:      n.Trojan,
 				Hysteria:    n.Hysteria,
@@ -42,6 +65,10 @@ func (h *Handler) PullNodeHandle(n *panel.NodeInfo) error {
 	})
 	if err != nil {
 		return fmt.Errorf("add node error: %w", err)
+	}
+	err = h.execHookCmd(h.Hook.AfterAddNode, h.nodeName, protocol, port)
+	if err != nil {
+		h.l.WithError(err).Warn("Exec after add node hook failed")
 	}
 	if h.nodeAdded.Load() {
 		h.nodeAdded.Store(true)

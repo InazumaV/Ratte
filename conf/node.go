@@ -25,6 +25,7 @@ type Options struct {
 	Panel  string                 `json:"Panel"`
 	Acme   string                 `json:"Acme"`
 	Cert   Cert                   `json:"Cert"`
+	Hook   Hook                   `json:"Hook"`
 	Expand map[string]interface{} `json:"Other"`
 }
 
@@ -39,6 +40,13 @@ type Cert struct {
 	Domain   string `json:"Domain"`
 	CertPath string `json:"Cert"`
 	KeyPath  string `json:"Key"`
+}
+
+type Hook struct {
+	BeforeAddNode string `json:"BeforeAddNode"`
+	AfterAddNode  string `json:"AfterAddNode"`
+	BeforeDelNode string `json:"BeforeDelNode"`
+	AfterDelNode  string `json:"AfterDelNode"`
 }
 
 type Node struct {

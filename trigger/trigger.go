@@ -5,6 +5,7 @@ import (
 	"Ratte/handler"
 	"fmt"
 	"github.com/Yuzuki616/Ratte-Interface/panel"
+	cmap "github.com/orcaman/concurrent-map/v2"
 	"github.com/robfig/cron/v3"
 	"github.com/sirupsen/logrus"
 )
@@ -16,7 +17,7 @@ type Trigger struct {
 	p        panel.Panel
 	remoteId int
 	remoteC  *conf.Remote
-	hashs    map[string]string
+	hashs    cmap.ConcurrentMap[string, string]
 }
 
 func NewTrigger(

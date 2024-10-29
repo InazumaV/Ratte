@@ -42,6 +42,16 @@ func New(
 
 func (h *Handler) Close() error {
 	if h.nodeAdded.Load() {
+		err := h.execHookCmd(h.Hook.BeforeDelNode, h.nodeName)
+		if err != nil {
+			h.l.WithError(err).Warn("Exec before del node hook failed")
+		}
+		defer func() {
+			err = h.execHookCmd(h.Hook.AfterDelNode, h.nodeName)
+			if err != nil {
+				h.l.WithError(err).Warn("Exec after del node hook failed")
+			}
+		}()
 		return h.c.DelNode(h.nodeName)
 	}
 	return nil

@@ -17,13 +17,13 @@ func (t *Trigger) addCronHandle(cron any, job cron.FuncJob) (cron.EntryID, error
 }
 
 func (t *Trigger) hashEqualsOrStore(name, hash string) bool {
-	if h, ok := t.hashs[name]; ok {
+	if h, ok := t.hashs.Get(name); ok {
 		if h == hash {
 			return true
 		}
-		t.hashs[name] = hash
+		t.hashs.Set(name, hash)
 	} else {
-		t.hashs[name] = hash
+		t.hashs.Set(name, hash)
 	}
 	return false
 }
