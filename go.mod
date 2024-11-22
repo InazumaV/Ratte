@@ -5,10 +5,11 @@ go 1.22.0
 toolchain go1.23.1
 
 require (
-	github.com/Yuzuki616/Ratte-Interface v0.0.0-20241025203935-a64517afc32b
+	github.com/Yuzuki616/Ratte-Interface v0.0.0-20241122170215-57da39558e5a
 	github.com/fsnotify/fsnotify v1.7.0
 	github.com/go-acme/lego/v4 v4.18.0
 	github.com/goccy/go-json v0.10.3
+	github.com/hashicorp/go-plugin v1.6.1
 	github.com/orcaman/concurrent-map/v2 v2.0.1
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/sirupsen/logrus v1.9.3
@@ -93,7 +94,6 @@ require (
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
 	github.com/hashicorp/go-hclog v1.6.3 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
-	github.com/hashicorp/go-plugin v1.6.1 // indirect
 	github.com/hashicorp/go-retryablehttp v0.7.7 // indirect
 	github.com/hashicorp/go-uuid v1.0.3 // indirect
 	github.com/hashicorp/yamux v0.1.1 // indirect

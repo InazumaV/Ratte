@@ -7,7 +7,6 @@ import (
 	"Ratte/trigger"
 	"github.com/Yuzuki616/Ratte-Interface/core"
 	"github.com/Yuzuki616/Ratte-Interface/panel"
-	"github.com/Yuzuki616/Ratte-Interface/plugin"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"os"
@@ -33,8 +32,8 @@ func init() {
 }
 
 var (
-	cores    map[string]*plugin.Client[core.Core]
-	panels   map[string]*plugin.Client[panel.Panel]
+	cores    map[string]*core.PluginClient
+	panels   map[string]*panel.PluginClient
 	acmes    map[string]*acme.Acme
 	handlers []*handler.Handler
 	triggers []*trigger.Trigger
@@ -51,16 +50,13 @@ func runHandle(_ *cobra.Command, _ []string) {
 
 	log.Info("Init core plugin...")
 	// new cores
-	cores = make(map[string]*plugin.Client[core.Core], len(c.Core))
+	cores = make(map[string]*core.PluginClient, len(c.Core))
 	for _, co := range c.Core {
-		c, err := plugin.NewClient[core.Core](&plugin.Config{
-			Type: plugin.CoreType,
-			Cmd:  exec.Command(co.Path),
-		})
+		c, err := core.NewClient(nil, exec.Command(co.Path))
 		if err != nil {
 			log.WithError(err).WithField("core", co.Name).Fatal("New core failed")
 		}
-		err = c.Caller().Start(co.DataPath, co.Config)
+		err = c.Start(co.DataPath, co.Config)
 		if err != nil {
 			log.WithError(err).WithField("core", co.Name).Fatal("Start core failed")
 		}
@@ -70,12 +66,9 @@ func runHandle(_ *cobra.Command, _ []string) {
 
 	log.Info("Init panel plugin...")
 	// new panels
-	panels = make(map[string]*plugin.Client[panel.Panel], len(c.Panel))
+	panels = make(map[string]*panel.PluginClient, len(c.Panel))
 	for _, p := range c.Panel {
-		pn, err := plugin.NewClient[panel.Panel](&plugin.Config{
-			Type: plugin.PanelType,
-			Cmd:  exec.Command(p.Path),
-		})
+		pn, err := panel.NewClient(nil, exec.Command(p.Path))
 		if err != nil {
 			log.WithError(err).WithField("panel", p.Name).Fatal("New panel failed")
 		}
@@ -104,12 +97,12 @@ func runHandle(_ *cobra.Command, _ []string) {
 		var pl panel.Panel
 		var ac *acme.Acme
 		if c, ok := cores[nd.Options.Core]; ok {
-			co = c.Caller()
+			co = c
 		} else {
 			log.WithField("core", nd.Options.Core).Fatal("Couldn't find core")
 		}
 		if p, ok := panels[nd.Options.Panel]; ok {
-			pl = p.Caller()
+			pl = p
 		} else {
 			log.WithField("panel", nd.Options.Panel).Fatal("Couldn't find panel")
 		}
