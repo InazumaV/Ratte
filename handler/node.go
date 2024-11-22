@@ -1,11 +1,9 @@
 package handler
 
 import (
-	"Ratte/common/maps"
 	"fmt"
 	"github.com/Yuzuki616/Ratte-Interface/core"
 	"github.com/Yuzuki616/Ratte-Interface/panel"
-	"github.com/Yuzuki616/Ratte-Interface/params"
 )
 
 func (h *Handler) PullNodeHandle(n *panel.NodeInfo) error {
@@ -43,24 +41,10 @@ func (h *Handler) PullNodeHandle(n *panel.NodeInfo) error {
 		h.l.WithError(err).Error("Exec before add node hook failed")
 	}
 	err = h.c.AddNode(&core.AddNodeParams{
-		NodeInfo: core.NodeInfo{
-			CommonNodeInfo: params.CommonNodeInfo{
-				Type:        n.Type,
-				VMess:       n.VMess,
-				VLess:       n.VLess,
-				Shadowsocks: n.Shadowsocks,
-				Trojan:      n.Trojan,
-				Hysteria:    n.Hysteria,
-				Other:       n.Other,
-				ExpandParams: params.ExpandParams{
-					OtherOptions: maps.Merge(n.OtherOptions, h.Expand),
-					CustomData:   n.CustomData,
-				},
-			},
-			TlsOptions: core.TlsOptions{
-				CertPath: h.Cert.CertPath,
-				KeyPath:  h.Cert.KeyPath,
-			},
+		NodeInfo: (*core.NodeInfo)(n),
+		TlsOptions: core.TlsOptions{
+			CertPath: h.Cert.CertPath,
+			KeyPath:  h.Cert.KeyPath,
 		},
 	})
 	if err != nil {
