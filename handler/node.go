@@ -30,7 +30,7 @@ func (h *Handler) PullNodeHandle(n *panel.NodeInfo) error {
 		protocol = "shadowsocks"
 		port = n.Shadowsocks.Port
 	case "trojan":
-		protocol = "trojana"
+		protocol = "trojan"
 		port = n.Trojan.Port
 	case "other":
 		protocol = "other"

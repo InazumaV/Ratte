@@ -5,6 +5,7 @@ import (
 	"Ratte/conf"
 	"Ratte/handler"
 	"Ratte/trigger"
+	"fmt"
 	"github.com/Yuzuki616/Ratte-Interface/core"
 	"github.com/Yuzuki616/Ratte-Interface/panel"
 	log "github.com/sirupsen/logrus"
@@ -49,30 +50,16 @@ func runHandle(_ *cobra.Command, _ []string) {
 	log.WithField("path", config).Info("Loaded.")
 
 	log.Info("Init core plugin...")
-	// new cores
-	cores = make(map[string]*core.PluginClient, len(c.Core))
-	for _, co := range c.Core {
-		c, err := core.NewClient(nil, exec.Command(co.Path))
-		if err != nil {
-			log.WithError(err).WithField("core", co.Name).Fatal("New core failed")
-		}
-		err = c.Start(co.DataPath, co.Config)
-		if err != nil {
-			log.WithError(err).WithField("core", co.Name).Fatal("Start core failed")
-		}
-		cores[co.Name] = c
+	err = startCores(c.Core)
+	if err != nil {
+		log.WithError(err).Fatal("Init core plugin failed")
 	}
 	log.Info("Done.")
 
 	log.Info("Init panel plugin...")
-	// new panels
-	panels = make(map[string]*panel.PluginClient, len(c.Panel))
-	for _, p := range c.Panel {
-		pn, err := panel.NewClient(nil, exec.Command(p.Path))
-		if err != nil {
-			log.WithError(err).WithField("panel", p.Name).Fatal("New panel failed")
-		}
-		panels[p.Name] = pn
+	err = startPanel(c.Panel)
+	if err != nil {
+		log.WithError(err).Fatal("Init panel plugin failed")
 	}
 	log.Info("Done.")
 
@@ -90,26 +77,145 @@ func runHandle(_ *cobra.Command, _ []string) {
 
 	log.Info("Starting...")
 	// new node
-	triggers = make([]*trigger.Trigger, 0, len(c.Node))
-	handlers = make([]*handler.Handler, len(c.Node))
-	for _, nd := range c.Node {
+	err = startTriggerAndHandler(c.Node)
+	if err != nil {
+		log.WithError(err).Fatal("Start trigger and handler failed")
+	}
+	log.Info("Started.")
+
+	c.SetErrorHandler(func(err error) {
+		log.WithFields(map[string]interface{}{
+			"error":    err,
+			"Services": "ConfWatcher",
+		}).Error("")
+	})
+	c.SetEventHandler(func(event uint, target ...string) {
+		l := log.WithFields(map[string]interface{}{
+			"Service": "ConfWatcher",
+		})
+		l.Info("Config changed, restart...")
+		err := closeTriggerAndHandler()
+		if err != nil {
+			log.WithError(err).Fatal("Close trigger and handler failed")
+		}
+		err = closeCore()
+		if err != nil {
+			log.WithError(err).Fatal("Close core failed")
+		}
+		err = closePanel()
+		if err != nil {
+			log.WithError(err).Fatal("Close panel failed")
+		}
+		err = startCores(c.Core)
+		if err != nil {
+			log.WithError(err).Fatal("Start core failed")
+		}
+		err = startPanel(c.Panel)
+		if err != nil {
+			log.WithError(err).Fatal("Start panel failed")
+		}
+		err = startTriggerAndHandler(c.Node)
+		if err != nil {
+			log.WithError(err).Fatal("Start trigger and handler failed")
+		}
+		l.Info("Restart Done.")
+	})
+	err = c.Watch()
+	if err != nil {
+		log.WithError(err).Fatal("Watch config failed")
+	}
+
+	runtime.GC()
+	sig := make(chan os.Signal, 1)
+	signal.Notify(sig, syscall.SIGINT, syscall.SIGKILL, syscall.SIGTERM)
+	<-sig
+	// clear
+	log.Info("Shutting down...")
+	err = closeTriggerAndHandler()
+	if err != nil {
+		log.WithError(err).Fatal("Close trigger and handler failed")
+	}
+	err = closeCore()
+	if err != nil {
+		log.WithError(err).Fatal("Close core failed")
+	}
+	err = closePanel()
+	if err != nil {
+		log.WithError(err).Fatal("Close panel failed")
+	}
+	log.Info("Done.")
+}
+
+func startCores(coresP []conf.Core) error {
+	// new cores
+	cores = make(map[string]*core.PluginClient, len(coresP))
+	for _, co := range coresP {
+		c, err := core.NewClient(nil, exec.Command(co.Path))
+		if err != nil {
+			return fmt.Errorf("new core error: %w", err)
+		}
+		err = c.Start(co.DataPath, co.Config)
+		if err != nil {
+			return fmt.Errorf("start core error: %w", err)
+		}
+		cores[co.Name] = c
+	}
+	return nil
+}
+
+func closeCore() error {
+	for _, c := range cores {
+		err := c.Close()
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func startPanel(panelsP []conf.Panel) error {
+	panels = make(map[string]*panel.PluginClient, len(panelsP))
+	for _, p := range panelsP {
+		pn, err := panel.NewClient(nil, exec.Command(p.Path))
+		if err != nil {
+			return fmt.Errorf("new panel error: %w", err)
+		}
+		panels[p.Name] = pn
+	}
+	return nil
+}
+
+func closePanel() error {
+	for _, p := range panels {
+		err := p.Close()
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func startTriggerAndHandler(c []conf.Node) error {
+	triggers = make([]*trigger.Trigger, 0, len(c))
+	handlers = make([]*handler.Handler, len(c))
+	for _, nd := range c {
 		var co core.Core
 		var pl panel.Panel
 		var ac *acme.Acme
 		if c, ok := cores[nd.Options.Core]; ok {
 			co = c
 		} else {
-			log.WithField("core", nd.Options.Core).Fatal("Couldn't find core")
+			return fmt.Errorf("unknown core name: %s", nd.Options.Core)
 		}
 		if p, ok := panels[nd.Options.Panel]; ok {
 			pl = p
 		} else {
-			log.WithField("panel", nd.Options.Panel).Fatal("Couldn't find panel")
+			return fmt.Errorf("")
 		}
 		if a, ok := acmes[nd.Options.Acme]; ok {
 			ac = a
 		} else {
-			log.WithField("acme", nd.Options.Acme).Fatal("Couldn't find acme")
+			return fmt.Errorf("unknown acme name: %s", nd.Options.Acme)
 		}
 
 		h := handler.New(co, pl, nd.Name, ac, log.WithFields(
@@ -126,18 +232,29 @@ func runHandle(_ *cobra.Command, _ []string) {
 			},
 		), &nd.Trigger, h, pl, &nd.Remote)
 		if err != nil {
-			log.WithError(err).Fatal("New trigger failed")
+			return fmt.Errorf("new trigger error: %w", err)
 		}
 		triggers = append(triggers, tr)
 		err = tr.Start()
 		if err != nil {
-			log.WithError(err).Fatal("Start trigger failed")
+			return fmt.Errorf("start trigger error: %w", err)
 		}
 	}
-	log.Info("Started.")
+	return nil
+}
 
-	runtime.GC()
-	sig := make(chan os.Signal, 1)
-	signal.Notify(sig, syscall.SIGINT, syscall.SIGKILL, syscall.SIGTERM)
-	<-sig
+func closeTriggerAndHandler() error {
+	for _, t := range triggers {
+		err := t.Close()
+		if err != nil {
+			return fmt.Errorf("close trigger error: %w", err)
+		}
+	}
+	for _, h := range handlers {
+		err := h.Close()
+		if err != nil {
+			return fmt.Errorf("close handler error: %w", err)
+		}
+	}
+	return nil
 }
