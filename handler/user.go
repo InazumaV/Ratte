@@ -3,8 +3,8 @@ package handler
 import (
 	"Ratte/common/slices"
 	"fmt"
-	"github.com/Yuzuki616/Ratte-Interface/core"
-	"github.com/Yuzuki616/Ratte-Interface/panel"
+	"github.com/InazumaV/Ratte-Interface/core"
+	"github.com/InazumaV/Ratte-Interface/panel"
 )
 
 func compareUserList(old, new []panel.UserInfo) (deleted []string, added []panel.UserInfo) {

@@ -15,7 +15,7 @@
 
 ## 关联仓库
 - 插件接口定义
-  - [Ratte-Interface](https://github.com/Yuzuki616/Ratte-Interface)
+  - [Ratte-Interface](https://github.com/InazumaV/Ratte-Interface)
 
 ## Thanks
 - [hashicorp/go-plugin](https://github.com/hashicorp/go-plugin)

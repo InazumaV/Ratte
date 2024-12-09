@@ -6,8 +6,8 @@ import (
 	"github.com/sirupsen/logrus"
 	"sync/atomic"
 )
-import "github.com/Yuzuki616/Ratte-Interface/core"
-import "github.com/Yuzuki616/Ratte-Interface/panel"
+import "github.com/InazumaV/Ratte-Interface/core"
+import "github.com/InazumaV/Ratte-Interface/panel"
 
 type Handler struct {
 	c         core.Core

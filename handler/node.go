@@ -2,8 +2,8 @@ package handler
 
 import (
 	"fmt"
-	"github.com/Yuzuki616/Ratte-Interface/core"
-	"github.com/Yuzuki616/Ratte-Interface/panel"
+	"github.com/InazumaV/Ratte-Interface/core"
+	"github.com/InazumaV/Ratte-Interface/panel"
 )
 
 func (h *Handler) PullNodeHandle(n *panel.NodeInfo) error {

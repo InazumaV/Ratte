@@ -4,7 +4,7 @@ import (
 	"Ratte/conf"
 	"Ratte/handler"
 	"fmt"
-	"github.com/Yuzuki616/Ratte-Interface/panel"
+	"github.com/InazumaV/Ratte-Interface/panel"
 	cmap "github.com/orcaman/concurrent-map/v2"
 	"github.com/robfig/cron/v3"
 	"github.com/sirupsen/logrus"
