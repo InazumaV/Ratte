@@ -1,8 +1,8 @@
 package handler
 
 import (
-	"Ratte/acme"
-	"Ratte/conf"
+	"github.com/InazumaV/Ratte/acme"
+	"github.com/InazumaV/Ratte/conf"
 	"github.com/sirupsen/logrus"
 	"sync/atomic"
 )

@@ -1,13 +1,13 @@
 package main
 
 import (
-	"Ratte/acme"
-	"Ratte/conf"
-	"Ratte/handler"
-	"Ratte/trigger"
 	"fmt"
 	"github.com/InazumaV/Ratte-Interface/core"
 	"github.com/InazumaV/Ratte-Interface/panel"
+	"github.com/InazumaV/Ratte/acme"
+	"github.com/InazumaV/Ratte/conf"
+	"github.com/InazumaV/Ratte/handler"
+	"github.com/InazumaV/Ratte/trigger"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"os"

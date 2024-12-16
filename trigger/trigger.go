@@ -1,10 +1,10 @@
 package trigger
 
 import (
-	"Ratte/conf"
-	"Ratte/handler"
 	"fmt"
 	"github.com/InazumaV/Ratte-Interface/panel"
+	"github.com/InazumaV/Ratte/conf"
+	"github.com/InazumaV/Ratte/handler"
 	cmap "github.com/orcaman/concurrent-map/v2"
 	"github.com/robfig/cron/v3"
 	"github.com/sirupsen/logrus"

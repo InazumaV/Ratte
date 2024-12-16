@@ -1,8 +1,8 @@
 package acme
 
 import (
-	"Ratte/conf"
 	"fmt"
+	"github.com/InazumaV/Ratte/conf"
 	"path"
 
 	"github.com/go-acme/lego/v4/certcrypto"

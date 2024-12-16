@@ -1,9 +1,9 @@
 package conf
 
 import (
-	"Ratte/common/watcher"
 	"errors"
 	"fmt"
+	"github.com/InazumaV/Ratte/common/watcher"
 	log "github.com/sirupsen/logrus"
 	"path"
 )

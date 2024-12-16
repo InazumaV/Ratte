@@ -1,8 +1,8 @@
 package acme
 
 import (
-	"Ratte/common/file"
 	"fmt"
+	"github.com/InazumaV/Ratte/common/file"
 	"github.com/go-acme/lego/v4/certcrypto"
 	"github.com/go-acme/lego/v4/certificate"
 	"github.com/go-acme/lego/v4/challenge/http01"

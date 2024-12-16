@@ -1,9 +1,9 @@
 package conf
 
 import (
-	trim "Ratte/common/json"
-	"Ratte/common/watcher"
 	"fmt"
+	trim "github.com/InazumaV/Ratte/common/json"
+	"github.com/InazumaV/Ratte/common/watcher"
 	"net/http"
 	"os"
 

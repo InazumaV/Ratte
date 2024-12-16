@@ -1,10 +1,10 @@
 package handler
 
 import (
-	"Ratte/common/slices"
 	"fmt"
 	"github.com/InazumaV/Ratte-Interface/core"
 	"github.com/InazumaV/Ratte-Interface/panel"
+	"github.com/InazumaV/Ratte/common/slices"
 )
 
 func compareUserList(old, new []panel.UserInfo) (deleted []string, added []panel.UserInfo) {
