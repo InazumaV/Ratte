@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/InazumaV/Ratte-Interface/core"
 	"github.com/InazumaV/Ratte-Interface/panel"
+	"github.com/InazumaV/Ratte/common/maps"
 )
 
 func (h *Handler) PullNodeHandle(n *panel.NodeInfo) error {
@@ -40,8 +41,10 @@ func (h *Handler) PullNodeHandle(n *panel.NodeInfo) error {
 	if err != nil {
 		h.l.WithError(err).Error("Exec before add node hook failed")
 	}
+	ni := (*core.NodeInfo)(n)
+	ni.OtherOptions = maps.Merge[string, any](ni.OtherOptions, h.Options.Expand)
 	err = h.c.AddNode(&core.AddNodeParams{
-		NodeInfo: (*core.NodeInfo)(n),
+		NodeInfo: ni,
 		TlsOptions: core.TlsOptions{
 			CertPath: h.Cert.CertPath,
 			KeyPath:  h.Cert.KeyPath,
