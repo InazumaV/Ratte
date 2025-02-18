@@ -26,6 +26,7 @@ type Options struct {
 	Acme   string                 `json:"Acme"`
 	Cert   Cert                   `json:"Cert"`
 	Hook   Hook                   `json:"Hook"`
+	Limit  Limit                  `json:"Limit"`
 	Expand map[string]interface{} `json:"Other"`
 }
 
@@ -47,6 +48,11 @@ type Hook struct {
 	AfterAddNode  string `json:"AfterAddNode"`
 	BeforeDelNode string `json:"BeforeDelNode"`
 	AfterDelNode  string `json:"AfterDelNode"`
+}
+
+type Limit struct {
+	IPLimit    int    `json:"IPLimit"`
+	SpeedLimit uint64 `json:"SpeedLimit"`
 }
 
 type Node struct {
