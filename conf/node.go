@@ -3,6 +3,8 @@ package conf
 import (
 	"fmt"
 	"github.com/goccy/go-json"
+	"strconv"
+	"strings"
 )
 
 type rawNodeConfig struct {
@@ -51,8 +53,42 @@ type Hook struct {
 }
 
 type Limit struct {
-	IPLimit    int    `json:"IPLimit"`
-	SpeedLimit uint64 `json:"SpeedLimit"`
+	IPLimit    int      `json:"IPLimit"`
+	SpeedLimit IntBytes `json:"SpeedLimit"`
+}
+
+type IntBytes uint64
+
+func (b *IntBytes) UnmarshalJSON(data []byte) error {
+	var num uint64
+	err := json.Unmarshal(data, &num)
+	if err == nil {
+		*b = IntBytes(num)
+	}
+	var numS string
+	err = json.Unmarshal(data, &numS)
+	if err != nil {
+		return err
+	}
+	unit := numS[len(numS)-2:]
+	num, err = strconv.ParseUint(numS[:len(numS)-2], 10, 64)
+	if err != nil {
+		return fmt.Errorf("invalid bytes num: %s", numS)
+	}
+	switch strings.ToLower(unit) {
+	case "kb":
+		*b = IntBytes(num) * 1000 / 8
+	case "mb":
+		*b = IntBytes(num) * 1000 * 1000 / 8
+	case "gb":
+		*b = IntBytes(num) * 1000 * 1000 * 1000 / 8
+	case "tb":
+		*b = IntBytes(num) * 1000 * 1000 * 1000 * 1000 * 1000 / 8
+	default:
+		return fmt.Errorf("invalid bytes unit: %s", unit)
+	}
+	*b = IntBytes(num)
+	return nil
 }
 
 type Node struct {
