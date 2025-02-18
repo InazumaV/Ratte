@@ -45,7 +45,7 @@ func (h *Handler) PullNodeHandle(n *panel.NodeInfo) error {
 	ni := (*core.NodeInfo)(n)
 	ni.OtherOptions = maps.Merge[string, any](ni.OtherOptions, h.Options.Expand)
 	ni.Limit.IPLimit = number.SelectBigger(ni.Limit.IPLimit, h.Limit.IPLimit)
-	ni.Limit.SpeedLimit = number.SelectBigger(ni.Limit.SpeedLimit, int(h.Limit.SpeedLimit))
+	ni.Limit.SpeedLimit = number.SelectBigger(ni.Limit.SpeedLimit, uint64(h.Limit.SpeedLimit))
 	err = h.c.AddNode(&core.AddNodeParams{
 		NodeInfo: ni,
 		TlsOptions: core.TlsOptions{
