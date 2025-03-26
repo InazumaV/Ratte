@@ -5,7 +5,7 @@ go 1.22.0
 toolchain go1.23.1
 
 require (
-	github.com/InazumaV/Ratte-Interface v0.0.0-20250218011150-2b79ae58515b
+	github.com/InazumaV/Ratte-Interface v0.0.0-20250326062317-c1a05d8e7762
 	github.com/fsnotify/fsnotify v1.7.0
 	github.com/go-acme/lego/v4 v4.18.0
 	github.com/goccy/go-json v0.10.3

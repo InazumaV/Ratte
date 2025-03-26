@@ -67,6 +67,8 @@ github.com/InazumaV/Ratte-Interface v0.0.0-20250218004206-5947494fa692 h1:CZ5+Cm
 github.com/InazumaV/Ratte-Interface v0.0.0-20250218004206-5947494fa692/go.mod h1:UxqxslbpT8Q4qMldSNI6VCX5WFXWDbvE4fXpymp73kA=
 github.com/InazumaV/Ratte-Interface v0.0.0-20250218011150-2b79ae58515b h1:OKjc2fZbgTlCmvnHbX8Do4WJLYzmCYxyUVFrE2HQhxw=
 github.com/InazumaV/Ratte-Interface v0.0.0-20250218011150-2b79ae58515b/go.mod h1:UxqxslbpT8Q4qMldSNI6VCX5WFXWDbvE4fXpymp73kA=
+github.com/InazumaV/Ratte-Interface v0.0.0-20250326062317-c1a05d8e7762 h1:2J/0eyXfCJ9I9SR5MZTENI1rOA522xj1PiQWIl3A8XA=
+github.com/InazumaV/Ratte-Interface v0.0.0-20250326062317-c1a05d8e7762/go.mod h1:UxqxslbpT8Q4qMldSNI6VCX5WFXWDbvE4fXpymp73kA=
 github.com/OneOfOne/xxhash v1.2.2/go.mod h1:HSdplMjZKSmBqAxg5vPj2TmRDmfkzw+cTzAElWljhcU=
 github.com/OpenDNS/vegadns2client v0.0.0-20180418235048-a3fa4a771d87 h1:xPMsUicZ3iosVPSIP7bW5EcGUzjiiMl1OYTe14y/R24=
 github.com/OpenDNS/vegadns2client v0.0.0-20180418235048-a3fa4a771d87/go.mod h1:iGLljf5n9GjT6kc0HBvyI1nOKnGQbNB66VzSNbK5iks=
