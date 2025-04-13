@@ -68,7 +68,7 @@ func (b *IntBytes) UnmarshalJSON(data []byte) error {
 	var numS string
 	err = json.Unmarshal(data, &numS)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to unmarshal intBytes: %v", err)
 	}
 	unit := numS[len(numS)-2:]
 	num, err = strconv.ParseUint(numS[:len(numS)-2], 10, 64)
@@ -102,7 +102,7 @@ func (n *Node) UnmarshalJSON(data []byte) (err error) {
 	rn := rawNodeConfig{}
 	err = json.Unmarshal(data, &rn)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to unmarshal Node: %v", err)
 	}
 
 	n.Remote = Remote{
@@ -112,24 +112,24 @@ func (n *Node) UnmarshalJSON(data []byte) (err error) {
 	if len(rn.RemoteRaw) > 0 {
 		err = json.Unmarshal(rn.RemoteRaw, &n.Remote)
 		if err != nil {
-			return
+			return fmt.Errorf("failed to unmarshal RemoteRaw: %v", err)
 		}
 	} else {
 		err = json.Unmarshal(data, &n.Remote)
 		if err != nil {
-			return
+			return fmt.Errorf("failed to unmarshal Remote: %v", err)
 		}
 	}
 	n.Options = Options{}
 	if len(rn.OptRaw) > 0 {
 		err = json.Unmarshal(rn.OptRaw, &n.Options)
 		if err != nil {
-			return
+			return fmt.Errorf("failed to unmarshal OptRaw: %v", err)
 		}
 	} else {
 		err = json.Unmarshal(data, &n.Options)
 		if err != nil {
-			return
+			return fmt.Errorf("failed to unmarshal Options: %v", err)
 		}
 	}
 	n.Trigger = Trigger{
@@ -141,12 +141,12 @@ func (n *Node) UnmarshalJSON(data []byte) (err error) {
 	if len(rn.TriggerRaw) > 0 {
 		err = json.Unmarshal(rn.OptRaw, &n.Trigger)
 		if err != nil {
-			return
+			return fmt.Errorf("failed to unmarshal TriggerRaw: %v", err)
 		}
 	} else {
 		err = json.Unmarshal(data, &n.Trigger)
 		if err != nil {
-			return
+			return fmt.Errorf("failed to unmarshal Trigger: %v", err)
 		}
 	}
 	if len(rn.Name) > 0 {

@@ -1,6 +1,9 @@
 package conf
 
-import "github.com/goccy/go-json"
+import (
+	"fmt"
+	"github.com/goccy/go-json"
+)
 
 type Core struct {
 	Name     string          `json:"Name,omitempty"`
@@ -13,7 +16,7 @@ type _core Core
 func (c *Core) UnmarshalJSON(data []byte) error {
 	err := json.Unmarshal(data, (*_core)(c))
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to unmarshal core: %v", err)
 	}
 	if len(c.Config) == 0 {
 		c.Config = data

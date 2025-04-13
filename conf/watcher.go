@@ -46,7 +46,7 @@ func (c *Conf) Watch() error {
 			c.configWatcher = w
 		}
 	} else {
-		if !c.Watcher.WatchLocalConfig {
+		if c.Watcher.WatchLocalConfig {
 			w := watcher.NewLocalWatcher(path.Dir(c.path), []string{path.Base(c.path)})
 			c.configWatcher = w
 		}

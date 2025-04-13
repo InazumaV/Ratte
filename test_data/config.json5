@@ -1,0 +1,53 @@
+{
+  "Log": {
+    "Level": "info",
+    "Path": "./log"
+  },
+  "Watcher": {
+    "WatchLocalConfig": true,
+    "WatchRemoteConfig": true
+  },
+  "Core": [
+    {
+      "Name": "Xray",
+      "Path": "./test_data/Ratte-Core-Xray",
+      "DataPath": "./test_data"
+    }
+  ],
+  "Panel": [
+    {
+      "Name": "V2board",
+      "Path": "./test_data/Ratte-Panel-V2b",
+      "DataPath": "./test_data"
+    }
+  ],
+  "Node": [
+    {
+      "Name": "default-node",
+      "Remote": {
+        "ApiHost": "http://127.0.0.1",
+        "NodeID": 1,
+        "ApiKey": "your-api-key",
+        "NodeType": "model_context",
+        "Timeout": 30
+      },
+      "Options": {
+        "Core": "Xray",
+        "Panel": "V2board",
+        "Limit": {
+          "IPLimit": 0,
+          "SpeedLimit": "0MB"
+        },
+        "Other": {
+          "SendIp": "127.0.0.1"
+        }
+      },
+      "Trigger": {
+        "PullNodeCron": 60,
+        "PullUserCron": 60,
+        "ReportUserCron": 60,
+        "RenewCertCron": "0 2 * * *"
+      }
+    }
+  ]
+}

@@ -5,7 +5,7 @@ go 1.22.0
 toolchain go1.23.1
 
 require (
-	github.com/InazumaV/Ratte-Interface v0.0.0-20250326062317-c1a05d8e7762
+	github.com/InazumaV/Ratte-Interface v0.0.0-20250413082501-770addad57ef
 	github.com/fsnotify/fsnotify v1.7.0
 	github.com/go-acme/lego/v4 v4.18.0
 	github.com/goccy/go-json v0.10.3
@@ -37,7 +37,6 @@ require (
 	github.com/Azure/go-autorest/tracing v0.6.0 // indirect
 	github.com/AzureAD/microsoft-authentication-library-for-go v1.2.2 // indirect
 	github.com/OpenDNS/vegadns2client v0.0.0-20180418235048-a3fa4a771d87 // indirect
-	github.com/Yuzuki616/Ratte-Interface v0.0.0-20241122172739-1b3f94836144 // indirect
 	github.com/akamai/AkamaiOPEN-edgegrid-golang v1.2.2 // indirect
 	github.com/aliyun/alibaba-cloud-sdk-go v1.62.712 // indirect
 	github.com/aws/aws-sdk-go-v2 v1.27.2 // indirect

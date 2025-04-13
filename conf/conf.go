@@ -43,7 +43,7 @@ func New(path string) *Conf {
 }
 
 func (c *Conf) Load(data []byte) error {
-	if len(data) >= 0 {
+	if len(data) > 0 {
 		err := json.Unmarshal(data, c)
 		if err != nil {
 			return fmt.Errorf("decode json error: %w", err)

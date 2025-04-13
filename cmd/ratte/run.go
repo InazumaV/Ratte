@@ -126,7 +126,7 @@ func runHandle(_ *cobra.Command, _ []string) {
 	}
 
 	runtime.GC()
-	sig := make(chan os.Signal, 1)
+	sig := make(chan os.Signal, 0)
 	signal.Notify(sig, syscall.SIGINT, syscall.SIGKILL, syscall.SIGTERM)
 	<-sig
 	// clear
@@ -200,22 +200,24 @@ func startTriggerAndHandler(c []conf.Node) error {
 	handlers = make([]*handler.Handler, len(c))
 	for _, nd := range c {
 		var co core.Core
-		var pl panel.Panel
-		var ac *acme.Acme
 		if c, ok := cores[nd.Options.Core]; ok {
 			co = c
 		} else {
 			return fmt.Errorf("unknown core name: %s", nd.Options.Core)
 		}
+		var pl panel.Panel
 		if p, ok := panels[nd.Options.Panel]; ok {
 			pl = p
 		} else {
 			return fmt.Errorf("")
 		}
-		if a, ok := acmes[nd.Options.Acme]; ok {
-			ac = a
-		} else {
-			return fmt.Errorf("unknown acme name: %s", nd.Options.Acme)
+		var ac *acme.Acme
+		if len(acmes) != 0 {
+			if a, ok := acmes[nd.Options.Acme]; ok {
+				ac = a
+			} else {
+				return fmt.Errorf("unknown acme name: %s", nd.Options.Acme)
+			}
 		}
 
 		h := handler.New(co, pl, nd.Name, ac, log.WithFields(
