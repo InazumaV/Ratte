@@ -18,6 +18,7 @@ type Trigger struct {
 	remoteId int
 	remoteC  *conf.Remote
 	hashs    cmap.ConcurrentMap[string, string]
+	order    chan int
 }
 
 func NewTrigger(
@@ -33,6 +34,7 @@ func NewTrigger(
 		h:       h,
 		p:       p,
 		remoteC: rm,
+		hashs:   cmap.New[string](),
 	}
 
 	// add pull node cron task
@@ -67,6 +69,7 @@ func (t *Trigger) Start() error {
 		Baseurl:  r.APIHost,
 		NodeId:   r.NodeID,
 		NodeType: r.NodeType,
+		Key:      r.Key,
 		Timeout:  r.Timeout,
 	})
 	if rsp.Err != nil {

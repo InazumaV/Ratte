@@ -197,7 +197,7 @@ func closePanel() error {
 
 func startTriggerAndHandler(c []conf.Node) error {
 	triggers = make([]*trigger.Trigger, 0, len(c))
-	handlers = make([]*handler.Handler, len(c))
+	handlers = make([]*handler.Handler, 0, len(c))
 	for _, nd := range c {
 		var co core.Core
 		if c, ok := cores[nd.Options.Core]; ok {

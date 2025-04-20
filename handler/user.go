@@ -36,6 +36,9 @@ func compareUserList(old, new []panel.UserInfo) (deleted []string, added []panel
 }
 
 func (h *Handler) PullUserHandle(users []panel.UserInfo) error {
+	if !h.nodeAdded.Load() {
+		return nil
+	}
 	del, add := compareUserList(h.userList, users)
 	cas := slices.RangeToNew[panel.UserInfo, core.UserInfo](add, func(_ int, v panel.UserInfo) core.UserInfo {
 		return core.UserInfo(v.UserInfo)
@@ -61,6 +64,9 @@ func (h *Handler) PullUserHandle(users []panel.UserInfo) error {
 }
 
 func (h *Handler) ReportUserHandle(id int) error {
+	if !h.nodeAdded.Load() {
+		return nil
+	}
 	var err error
 	req := &core.GetUserTrafficParams{NodeName: h.nodeName}
 	var users []panel.UserTrafficInfo

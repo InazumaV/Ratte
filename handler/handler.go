@@ -18,6 +18,7 @@ type Handler struct {
 	userList  []panel.UserInfo
 	userHash  map[string]struct{}
 	nodeAdded atomic.Bool
+	needTls   bool
 	*conf.Options
 }
 
