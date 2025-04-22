@@ -80,8 +80,20 @@ func (h *Handler) ReportUserHandle(id int) error {
 		if rsp.Up == 0 && rsp.Down == 0 {
 			return false
 		}
+		users = append(users, panel.UserTrafficInfo{
+			Id:       v.Id,
+			Name:     v.Name,
+			Upload:   rsp.Up,
+			Download: rsp.Down,
+		})
 		return false
 	})
+	if err != nil {
+		return fmt.Errorf("get user traffic error: %w", err)
+	}
+	if len(users) == 0 {
+		return nil
+	}
 	err = h.p.ReportUserTraffic(&panel.ReportUserTrafficParams{
 		Id:    id,
 		Users: users,
