@@ -71,12 +71,12 @@ func (c *Conf) Watch() error {
 		w := watcher.NewLocalWatcher(co.DataPath, []string{"*"})
 		w.SetErrorHandler(watcher.ErrorHandler(c.errorHandler))
 		w.SetEventHandler(func(_ string) error {
-			c.watcherHandle(CoreDataPathChangedEvent, c.Core[i].Name)
+			c.watcherHandle(CoreDataPathChangedEvent, c.Core[i].Type)
 			return nil
 		})
 		err := w.Watch()
 		if err != nil {
-			return fmt.Errorf("watch core %s err:%w", co.Name, err)
+			return fmt.Errorf("watch core %s err:%w", co.Type, err)
 		}
 		watchers[i] = w
 	}
