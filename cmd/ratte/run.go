@@ -50,14 +50,14 @@ func runHandle(_ *cobra.Command, _ []string) {
 	log.WithField("path", config).Info("Loaded.")
 
 	log.Info("Init core plugin...")
-	err = startCores(c.Core)
+	err = startCores(c.Plugin.Core, c.Core)
 	if err != nil {
 		log.WithError(err).Fatal("Init core plugin failed")
 	}
 	log.Info("Done.")
 
 	log.Info("Init panel plugin...")
-	err = startPanel(c.Panel)
+	err = startPanel(c.Plugin.Panel)
 	if err != nil {
 		log.WithError(err).Fatal("Init panel plugin failed")
 	}
@@ -106,11 +106,11 @@ func runHandle(_ *cobra.Command, _ []string) {
 		if err != nil {
 			log.WithError(err).Fatal("Close panel failed")
 		}
-		err = startCores(c.Core)
+		err = startCores(c.Plugin.Core, c.Core)
 		if err != nil {
 			log.WithError(err).Fatal("Start core failed")
 		}
-		err = startPanel(c.Panel)
+		err = startPanel(c.Plugin.Panel)
 		if err != nil {
 			log.WithError(err).Fatal("Start panel failed")
 		}
@@ -146,19 +146,25 @@ func runHandle(_ *cobra.Command, _ []string) {
 	log.Info("Done.")
 }
 
-func startCores(coresP []conf.Core) error {
+func startCores(coresP []conf.Plugin, cc []conf.Core) error {
 	// new cores
 	cores = make(map[string]*core.PluginClient, len(coresP))
-	for _, co := range coresP {
-		c, err := core.NewClient(nil, exec.Command(co.Path))
-		if err != nil {
-			return fmt.Errorf("new core error: %w", err)
+	for _, ccV := range cc {
+		for _, co := range coresP {
+			if co.Name != ccV.Type {
+				continue
+			}
+			c, err := core.NewClient(nil, exec.Command(co.Path))
+			if err != nil {
+				return fmt.Errorf("new core error: %w", err)
+			}
+			err = c.Start(ccV.DataPath, ccV.Config)
+			if err != nil {
+				return fmt.Errorf("start core error: %w", err)
+			}
+			cores[co.Name] = c
+			break
 		}
-		err = c.Start(co.DataPath, co.Config)
-		if err != nil {
-			return fmt.Errorf("start core error: %w", err)
-		}
-		cores[co.Name] = c
 	}
 	return nil
 }
@@ -173,7 +179,7 @@ func closeCore() error {
 	return nil
 }
 
-func startPanel(panelsP []conf.Panel) error {
+func startPanel(panelsP []conf.Plugin) error {
 	panels = make(map[string]*panel.PluginClient, len(panelsP))
 	for _, p := range panelsP {
 		pn, err := panel.NewClient(nil, exec.Command(p.Path))

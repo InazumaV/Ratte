@@ -21,9 +21,9 @@ type Conf struct {
 	// config fields
 	Log     Log     `json:"Log,omitempty"`
 	Watcher Watcher `json:"Watcher,omitempty"`
+	Plugin  Plugins `json:"Plugin,omitempty"` // Only accept from file path
 	Core    []Core  `json:"Core,omitempty"`
 	Acme    []ACME  `json:"Acme,omitempty"`
-	Panel   []Panel `json:"Panel,omitempty"`
 	Node    []Node  `json:"Node,omitempty"`
 }
 
@@ -34,11 +34,11 @@ func New(path string) *Conf {
 			WatchLocalConfig:  true,
 			WatchRemoteConfig: true,
 		},
-		Log:   newLog(),
-		Core:  make([]Core, 0),
-		Acme:  make([]ACME, 0),
-		Panel: make([]Panel, 0),
-		Node:  make([]Node, 0),
+		Log:    newLog(),
+		Core:   make([]Core, 0),
+		Acme:   make([]ACME, 0),
+		Plugin: Plugins{},
+		Node:   make([]Node, 0),
 	}
 }
 
