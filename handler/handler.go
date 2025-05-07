@@ -1,13 +1,13 @@
 package handler
 
 import (
+	"github.com/InazumaV/Ratte-Interface/core"
+	"github.com/InazumaV/Ratte-Interface/panel"
 	"github.com/InazumaV/Ratte/acme"
 	"github.com/InazumaV/Ratte/conf"
 	"github.com/sirupsen/logrus"
 	"sync/atomic"
 )
-import "github.com/InazumaV/Ratte-Interface/core"
-import "github.com/InazumaV/Ratte-Interface/panel"
 
 type Handler struct {
 	c         core.Core
