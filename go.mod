@@ -6,10 +6,13 @@ toolchain go1.24.2
 
 require (
 	github.com/InazumaV/Ratte-Core-Xray v0.0.0-20250420021044-42b0d35bcd79
-	github.com/InazumaV/Ratte-Interface v0.0.0-20250505045058-84e4bf9f70e4
+	github.com/InazumaV/Ratte-Interface v0.0.0-20250505045848-a0068c2a9be9
+	github.com/InazumaV/Ratte-Panel-V2b v0.0.0-20250420013203-72f8abe3e919
 	github.com/fsnotify/fsnotify v1.7.0
 	github.com/go-acme/lego/v4 v4.18.0
 	github.com/goccy/go-json v0.10.3
+	github.com/google/wire v0.6.0
+	github.com/hashicorp/go-multierror v1.1.1
 	github.com/orcaman/concurrent-map/v2 v2.0.1
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/sirupsen/logrus v1.9.3
@@ -37,7 +40,6 @@ require (
 	github.com/Azure/go-autorest/logger v0.2.1 // indirect
 	github.com/Azure/go-autorest/tracing v0.6.0 // indirect
 	github.com/AzureAD/microsoft-authentication-library-for-go v1.2.2 // indirect
-	github.com/InazumaV/Ratte-Panel-V2b v0.0.0-20250420013203-72f8abe3e919 // indirect
 	github.com/OpenDNS/vegadns2client v0.0.0-20180418235048-a3fa4a771d87 // indirect
 	github.com/akamai/AkamaiOPEN-edgegrid-golang v1.2.2 // indirect
 	github.com/aliyun/alibaba-cloud-sdk-go v1.62.712 // indirect
@@ -100,7 +102,6 @@ require (
 	github.com/hashicorp/errwrap v1.0.0 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
 	github.com/hashicorp/go-hclog v1.6.3 // indirect
-	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/hashicorp/go-plugin v1.6.1 // indirect
 	github.com/hashicorp/go-retryablehttp v0.7.7 // indirect
 	github.com/hashicorp/go-uuid v1.0.3 // indirect

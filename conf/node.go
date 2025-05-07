@@ -23,7 +23,7 @@ type Remote struct {
 }
 
 type Options struct {
-	Core   string                 `json:"Core"`
+	Core   string                 `json:"CorePlugin"`
 	Panel  string                 `json:"Panel"`
 	Acme   string                 `json:"Acme"`
 	Cert   Cert                   `json:"Cert"`

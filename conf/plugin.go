@@ -5,14 +5,14 @@ import (
 	"github.com/goccy/go-json"
 )
 
-type Core struct {
-	Type     string          `json:"type"`
+type CorePlugin struct {
 	DataPath string          `json:"DataPath,omitempty"`
 	Config   json.RawMessage `json:"Config,omitempty"`
+	Plugin
 }
-type _core Core
+type _core CorePlugin
 
-func (c *Core) UnmarshalJSON(data []byte) error {
+func (c *CorePlugin) UnmarshalJSON(data []byte) error {
 	err := json.Unmarshal(data, (*_core)(c))
 	if err != nil {
 		return fmt.Errorf("failed to unmarshal core: %v", err)
@@ -20,12 +20,17 @@ func (c *Core) UnmarshalJSON(data []byte) error {
 	if len(c.Config) == 0 {
 		c.Config = data
 	}
+
+	err = json.Unmarshal(c.Config, &c.Plugin)
+	if err != nil {
+		return fmt.Errorf("failed to unmarshal core config: %v", err)
+	}
 	return nil
 }
 
 type Plugins struct {
-	Core  []Plugin `json:"core"`
-	Panel []Plugin `json:"panel"`
+	Core  []CorePlugin `json:"core"`
+	Panel []Plugin     `json:"panel"`
 }
 
 type Plugin struct {

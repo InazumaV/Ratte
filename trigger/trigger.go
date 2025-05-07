@@ -21,7 +21,7 @@ type Trigger struct {
 	order    chan int
 }
 
-func NewTrigger(
+func New(
 	l *logrus.Entry,
 	tc *conf.Trigger,
 	h *handler.Handler,
