@@ -65,6 +65,8 @@ github.com/InazumaV/Ratte-Core-Xray v0.0.0-20250420021044-42b0d35bcd79 h1:PruEu6
 github.com/InazumaV/Ratte-Core-Xray v0.0.0-20250420021044-42b0d35bcd79/go.mod h1:GGt1mWh9rdkPD9jT/iKM170Oqk1xm8s1ujH+QIW1nGk=
 github.com/InazumaV/Ratte-Interface v0.0.0-20250505045848-a0068c2a9be9 h1:+adxGP0iY0EYP8iuva/q0IUgUSwIBEz8ZXWVuW8PTTA=
 github.com/InazumaV/Ratte-Interface v0.0.0-20250505045848-a0068c2a9be9/go.mod h1:UxqxslbpT8Q4qMldSNI6VCX5WFXWDbvE4fXpymp73kA=
+github.com/InazumaV/Ratte-Interface v0.0.0-20250519063521-202abe204fd8 h1:WjSGJqB9zmNuJ0Iv0Exo6PdKHMnJ1Z2vdGb/Vc5X9l0=
+github.com/InazumaV/Ratte-Interface v0.0.0-20250519063521-202abe204fd8/go.mod h1:UxqxslbpT8Q4qMldSNI6VCX5WFXWDbvE4fXpymp73kA=
 github.com/InazumaV/Ratte-Panel-V2b v0.0.0-20250420013203-72f8abe3e919 h1:+Fp5s8BVpk3vQC7N/x3a6sTRZNSU8Jd8G4MenyLnK3g=
 github.com/InazumaV/Ratte-Panel-V2b v0.0.0-20250420013203-72f8abe3e919/go.mod h1:5EkRRTlqZqG3rp3aP6QiPlrPJKpWtwt5gBtJduFv35E=
 github.com/OmarTariq612/goech v0.0.0-20240405204721-8e2e1dafd3a0 h1:Wo41lDOevRJSGpevP+8Pk5bANX7fJacO2w04aqLiC5I=

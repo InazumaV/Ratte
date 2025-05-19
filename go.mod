@@ -6,7 +6,7 @@ toolchain go1.24.2
 
 require (
 	github.com/InazumaV/Ratte-Core-Xray v0.0.0-20250420021044-42b0d35bcd79
-	github.com/InazumaV/Ratte-Interface v0.0.0-20250505045848-a0068c2a9be9
+	github.com/InazumaV/Ratte-Interface v0.0.0-20250519063521-202abe204fd8
 	github.com/InazumaV/Ratte-Panel-V2b v0.0.0-20250420013203-72f8abe3e919
 	github.com/fsnotify/fsnotify v1.7.0
 	github.com/go-acme/lego/v4 v4.18.0
