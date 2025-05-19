@@ -10,7 +10,7 @@
   - [ ] Ratte-Core-SB
 - [ ] Panel 插件的实现
   - [x] Ratte-Panel-V2b
-  - [ ] Ratte-Panel-PP
+  - [x] Ratte-Panel-PP
 - [ ] 对 ACME 进行插件化重构
 - [ ] 插件管理器的实现
 - [ ] Cli UI 的实现
